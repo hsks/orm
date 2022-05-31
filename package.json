@@ -1,11 +1,11 @@
 {
-  "name": "@laufire/utils",
+  "name": "dbParser",
   "version": "3.0.0-0",
   "description": "A simple set of utility libraries to ease development.",
   "main": "./index.js",
   "scripts": {
     "copy": "cp ./package.json ./ReadMe.md ./LICENSE ./dist/",
-    "build": "rm -rf ./dist && babel --ignore '**/*.spec.js' -d ./dist ./src && npm run copy",
+    "build": "rm -rf ./dist && babel --ignore '**/*.test.js' -d ./dist ./src && npm run copy",
     "dev": "npm run build && cd ./dist && npm link && cd ..",
     "test": "jest --no-cache",
     "test-dev": "retryCount=10 npm run test -- --collectCoverage=false",
@@ -34,7 +34,6 @@
     "@babel/core": "^7.14.0",
     "@babel/plugin-transform-runtime": "^7.13.15",
     "@babel/preset-env": "^7.14.1",
-    "@laufire/utils": "^2.9.2",
     "acorn": "^6.4.2",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
@@ -64,9 +63,10 @@
     "modulePathIgnorePatterns": [
       "<rootDir>/dist/"
     ],
-    "testRegex": "src/.*\\.spec\\.js$"
+    "testRegex": "src/.*\\.test\\.js$"
   },
   "dependencies": {
-    "@babel/runtime": "^7.14.0"
+    "@babel/runtime": "^7.14.0",
+    "@laufire/utils": "^3.0.0-0"
   }
 }
