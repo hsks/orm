@@ -1,5 +1,6 @@
 const { map } = require('@laufire/utils/collection');
 const buildEntity = require('./buildEntity');
+const traverse = require('./traverse');
 
 const parser = (context) => {
 	const { source: entities, config } = context;
@@ -13,6 +14,8 @@ const parser = (context) => {
 				entityName: name,
 			},
 		}));
+
+	traverse(context);
 };
 
 module.exports = parser;
