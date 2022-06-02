@@ -24,7 +24,7 @@ const config = {
 					children: {
 						deliveryAddress: {
 							type: 'entity',
-							path: '',
+							path: './orders/deliveryAddress',
 							maping: {
 								city: './city',
 								pincode: './pincode',
@@ -35,7 +35,7 @@ const config = {
 						products: {
 							type: 'collection',
 							children: {},
-							path: '',
+							path: './orders/products',
 							maping: {
 								name: './name',
 								quantity: './quantity',

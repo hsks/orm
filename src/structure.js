@@ -1,5 +1,4 @@
 const customer = {
-	id: '',
 	name: '',
 	mobileNumber: '',
 	age: '',
@@ -10,10 +9,12 @@ const customer = {
 	},
 	orders: [
 		{
+			id: '',
 			date: '',
 			invoiceNumber: '',
 			deliveryDate: '',
 			deliveryAddress: {
+				id: '',
 				city: '',
 				pincode: '',
 				street: '',
@@ -21,18 +22,19 @@ const customer = {
 			},
 			products: [
 				{
+					id: '',
 					name: '',
 					quantity: '',
 					price: 1,
 					_status: 'create',
 				},
 			],
-			_status: 'create',
+			_status: 'delete',
 		},
 	],
 
 	// CRUD actions
-	_status: 'delete',
+	_status: 'create',
 };
 
 module.exports = { customer };
