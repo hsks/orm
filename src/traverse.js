@@ -1,47 +1,44 @@
 const { map, translate } = require('@laufire/utils/collection');
-const cb = require('./cb');
 
-const typeProcessors = {
-	// eslint-disable-next-line max-lines-per-function
-	entity: (context) => {
-		const { data: { entityData, entityConfig }, data } = context;
-		const { _status } = entityData;
-		const { maping, children } = entityConfig;
+const entity = (context) => {
+	const { data: { entityData, entityConfig }, cb } = context;
+	const { _status } = entityData;
+	const { maping } = entityConfig;
 
-		_status !== 'delete' && cb({
+	const callBack = () => cb({
+		...context,
+		data: {
+			action: _status,
+			maping: translate(entityData, maping),
+		},
+	});
+
+	const process = () => processChildren(context);
+
+	const orders = _status === 'delete'
+		? [process, callBack]
+		: [callBack, process];
+
+	map(orders, (fn) => fn());
+};
+
+const collection = (context) => {
+	const { data: { entityData, entityConfig }, data } = context;
+
+	map(entityData, (entity) => {
+		typeProcessors.entity({
 			...context,
 			data: {
-				action: _status,
-				maping: translate(entityData, maping),
+				entityData: entity,
+				entityConfig: entityConfig,
 			},
 		});
+	});
+};
 
-		map(children, (entity) => {
-			const builtContext = {
-				...context,
-				data: { ...data, entityData: entity },
-			};
-
-			_status === 'delete'
-				? processDelete(builtContext)
-				: process(builtContext);
-		});
-	},
-	collection: (context) => {
-		const { data: { entityData }, data } = context;
-
-		map(entityData, (entity) => {
-			const { _status } = entity;
-			const builtContext = {
-				...context,
-				data: { ...data, entityData: entity },
-			};
-
-			_status === 'delete'
-				? processDelete(builtContext)
-				: process(builtContext);
-		});
-	},
+const typeProcessors = {
+	entity,
+	collection,
 };
 
 const processChildren = (context) => {
@@ -61,67 +58,20 @@ const processChildren = (context) => {
 	});
 };
 
-const deleteEntity = (context) => {
-	const { data: { entityConfig: { maping }}} = context;
-	const { data: { entityData: { _status }, entityData }} = context;
-
-	processChildren(context);
-	cb({
-		...context,
-		data: {
-			action: _status,
-			maping: translate(entityData, maping),
-		},
-	});
-};
-
-const processDelete = (context) => {
-	const { data: { entityData, entityConfig }} = context;
-	const { maping } = entityConfig;
-	const { _status } = entityData;
-
-	deleteEntity(context);
-
-	cb({
-		...context,
-		data: {
-			action: _status,
-			maping: translate(entityData, maping),
-		},
-	});
-};
-
-const process = (context) => {
-	const { data: { entityData, entityConfig }} = context;
-	const { maping } = entityConfig;
-	const { _status } = entityData;
-
-	cb({
-		...context,
-		data: {
-			action: _status,
-			maping: translate(entityData, maping),
-		},
-	});
-	processChildren(context);
-};
-
 const traverse = (context) => {
 	const { source, config: { children }} = context;
 
 	map(source, (entityData, entityName) => {
-		const { _status } = entityData;
 		const entityConfig = children[entityName];
-		const builtContext = {
-			...context, data: {
+		const { type } = entityConfig;
+
+		typeProcessors[type]({
+			...context,
+			data: {
 				entityData,
 				entityConfig,
 			},
-		};
-
-		_status === 'delete'
-			? processDelete(builtContext)
-			: process(builtContext);
+		});
 	});
 };
 

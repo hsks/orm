@@ -4,10 +4,8 @@ const rules = require('./rules');
 const getAction = (context) => {
 	const { data } = context;
 
-	const { action } = find(rules, ({ action, ...rule }) =>
-		contains(data, rule));
-
-	return action;
+	return find(rules, ({ action, ...rule }) =>
+		contains(data, rule))?.action;
 };
 
 module.exports = getAction;
