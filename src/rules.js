@@ -36,6 +36,15 @@ const rules = [
 		idExists: true,
 		action: 'update',
 	},
+	{
+		currentStatus: 'read',
+		idExists: true,
+		action: 'read',
+	},
+	{
+		idExists: true,
+		action: 'error',
+	},
 ];
 
 module.exports = rules;
