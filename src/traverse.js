@@ -2,20 +2,21 @@ const { map, translate } = require('@laufire/utils/collection');
 
 const entity = (context) => {
 	const { data: { entityData, entityConfig }, cb } = context;
-	const { _status } = entityData;
+	const { config: { statusKey }} = context;
+	const { [statusKey]: action } = entityData;
 	const { maping } = entityConfig;
 
 	const callBack = () => cb({
 		...context,
 		data: {
-			action: _status,
+			action: action,
 			maping: translate(entityData, maping),
 		},
 	});
 
 	const process = () => processChildren(context);
 
-	const orders = _status === 'delete'
+	const orders = action === 'delete'
 		? [process, callBack]
 		: [callBack, process];
 
