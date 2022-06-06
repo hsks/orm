@@ -48,7 +48,7 @@ describe('getAction', () => {
 			},
 		];
 
-		rules.forEach(({ action, ...rule }) => {
+		rules.forEach(({ action: dummy, ...rule }) => {
 			const expected = find(rules, (data) => contains(data, rule));
 
 			expect(isDefined(expected)).toEqual(true);

@@ -1,5 +1,3 @@
-const cb = (context) => {
-	console.log;
-};
+const cb = () => {};
 
 module.exports = cb;

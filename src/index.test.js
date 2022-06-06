@@ -19,8 +19,14 @@ describe('parser', () => {
 			],
 			_status: parentStatus,
 		});
-		const customer = generateSkeleton({ parentStatus: 'delete', childStatus: 'create' });
-		const student = generateSkeleton({ parentStatus: 'delete', childStatus: 'delete' });
+		const customer = generateSkeleton({
+			parentStatus: 'delete',
+			childStatus: 'create',
+		});
+		const student = generateSkeleton({
+			parentStatus: 'delete',
+			childStatus: 'delete',
+		});
 		const source = {
 			customer,
 			student,

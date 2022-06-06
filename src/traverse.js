@@ -14,6 +14,7 @@ const entity = (context) => {
 		},
 	});
 
+	// eslint-disable-next-line no-undef
 	const process = () => processChildren(context);
 
 	const orders = action === 'delete'
@@ -24,13 +25,14 @@ const entity = (context) => {
 };
 
 const collection = (context) => {
-	const { data: { entityData, entityConfig }, data } = context;
+	const { data: { entityData, entityConfig }} = context;
 
-	map(entityData, (entity) => {
+	map(entityData, (item) => {
+		// eslint-disable-next-line no-use-before-define
 		typeProcessors.entity({
 			...context,
 			data: {
-				entityData: entity,
+				entityData: item,
 				entityConfig: entityConfig,
 			},
 		});
@@ -40,23 +42,6 @@ const collection = (context) => {
 const typeProcessors = {
 	entity,
 	collection,
-};
-
-const processChildren = (context) => {
-	const { data: { entityConfig: { children }}} = context;
-	const { data: { entityData }} = context;
-
-	map(children, (childConfig, name) => {
-		const { type } = childConfig;
-
-		typeProcessors[type]({
-			...context,
-			data: {
-				entityData: entityData[name],
-				entityConfig: childConfig,
-			},
-		});
-	});
 };
 
 const traverse = (context) => {

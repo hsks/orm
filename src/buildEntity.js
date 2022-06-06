@@ -19,7 +19,7 @@ const entity = (context) => {
 	const { [statusKey]: currentStatus, id } = entityData;
 	const { children } = currentConfig;
 
-	const action = getAction({
+	entityData[statusKey] = getAction({
 		...context,
 		data: {
 			parentStatus: parentStatus,
@@ -28,8 +28,7 @@ const entity = (context) => {
 		},
 	});
 
-	entityData[statusKey] = action;
-
+	// eslint-disable-next-line no-use-before-define
 	map(children, ({ path }, name) => process({
 		...context,
 		data: {
@@ -48,10 +47,10 @@ const collection = (context) => {
 	const { children } = config;
 
 	// eslint-disable-next-line max-lines-per-function
-	map(entityData, (entity) => {
-		const { [statusKey]: currentStatus, id } = entity;
+	map(entityData, (item) => {
+		const { [statusKey]: currentStatus, id } = item;
 
-		const action = getAction({
+		item[statusKey] = getAction({
 			...context,
 			data: {
 				parentStatus: parentStatus,
@@ -60,15 +59,14 @@ const collection = (context) => {
 			},
 		});
 
-		entity[statusKey] = action;
-
+		// eslint-disable-next-line no-use-before-define
 		map(children, (data, name) => process({
 			...context,
 			data: {
 				config: config.children[name],
-				entityData: entity[name],
+				entityData: item[name],
 				entityName: name,
-				parentStatus: entity[statusKey],
+				parentStatus: item[statusKey],
 			},
 		}));
 	});
