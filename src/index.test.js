@@ -29,20 +29,20 @@ describe('parser', () => {
 		});
 		const source = {
 			customer,
-			student,
+
 		};
 		const customerConfig = {
 			type: 'entity',
 			path: '/',
 			maping: {
-				name: './name',
+				name: 'name',
 			},
 			children: {
 				orders: {
 					type: 'collection',
 					path: './orders',
 					maping: {
-						childName: './childName',
+						childName: 'childName',
 					},
 					children: {},
 				},
