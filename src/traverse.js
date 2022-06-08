@@ -1,7 +1,5 @@
-const {
-	map, translate, flip,
-	clone, merge,
-} = require('@laufire/utils/collection');
+const {	translate, flip, merge } = require('@laufire/utils/collection');
+const { asyncMap } = require('./helpers');
 
 // eslint-disable-next-line max-lines-per-function
 const entity = (context) => {
@@ -30,20 +28,13 @@ const entity = (context) => {
 		? [process, callBack]
 		: [callBack, process];
 
-	const asyncMap = async (data) => {
-		const duplicates = clone(data);
-
-		for(let index = 0; index < duplicates.length; index++)
-			await duplicates[index]();
-	};
-
-	asyncMap(orders);
+	asyncMap(orders, (fn) => fn());
 };
 
 const collection = (context) => {
 	const { data: { entityData, entityConfig }} = context;
 
-	map(entityData, (item) => {
+	asyncMap(entityData, (item) => {
 		// eslint-disable-next-line no-use-before-define
 		typeProcessors.entity({
 			...context,
@@ -64,7 +55,7 @@ const processChildren = (context) => {
 	const { data: { entityConfig: { children }}} = context;
 	const { data: { entityData }} = context;
 
-	map(children, (childConfig, name) => {
+	asyncMap(children, (childConfig, name) => {
 		const { type } = childConfig;
 
 		typeProcessors[type]({
@@ -80,7 +71,7 @@ const processChildren = (context) => {
 const traverse = (context) => {
 	const { source, config: { children }} = context;
 
-	map(source, (entityData, entityName) => {
+	asyncMap(source, (entityData, entityName) => {
 		const entityConfig = children[entityName];
 		const { type } = entityConfig;
 
