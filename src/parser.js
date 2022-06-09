@@ -15,7 +15,7 @@ const parser = (context) => {
 			},
 		}));
 
-	traverse(context);
+	return traverse(context);
 };
 
 module.exports = parser;

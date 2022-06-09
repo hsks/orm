@@ -1,8 +1,7 @@
-const { map } = require('@laufire/utils/collection');
 const parser = require('./parser');
 
 describe('parser', () => {
-	test('parses the data and make necessery actions.', () => {
+	test('parses the data and make necessery actions.', async () => {
 		const name = Symbol('name');
 		const childName = Symbol('childName');
 		const id = Symbol('id');
@@ -24,12 +23,12 @@ describe('parser', () => {
 			childStatus: 'create',
 		});
 		const student = generateSkeleton({
-			parentStatus: 'delete',
-			childStatus: 'delete',
+			parentStatus: 'update',
+			childStatus: 'update',
 		});
 		const source = {
 			customer,
-
+			student,
 		};
 		const customerConfig = {
 			type: 'entity',
@@ -58,7 +57,7 @@ describe('parser', () => {
 		const cb = jest.fn();
 		const context = { source, config, cb };
 
-		parser(context);
+		await parser(context);
 		const expections = [
 			{
 				...context,
@@ -81,7 +80,7 @@ describe('parser', () => {
 			{
 				...context,
 				data: {
-					action: 'delete',
+					action: 'update',
 					maping: {
 						name,
 					},
@@ -90,7 +89,7 @@ describe('parser', () => {
 			{
 				...context,
 				data: {
-					action: 'delete',
+					action: 'update',
 					maping: {
 						childName,
 					},
@@ -98,7 +97,9 @@ describe('parser', () => {
 			},
 		];
 
-		map(expections, (expected) =>
-			expect(cb).toHaveBeenCalledWith(expected));
+		// Map(expections, (expected) =>
+		// 	Expect(cb).toHaveBeenCalledWith(expected));
+
+		expect(cb.mock.calls.map(([value]) => value)).toEqual(expections);
 	});
 });

@@ -4,11 +4,11 @@ const typeProcessors = require('./typeProcessors');
 const traverse = (context) => {
 	const { source, config: { children }} = context;
 
-	asyncMap(source, (entityData, entityName) => {
+	return asyncMap(source, (entityData, entityName) => {
 		const entityConfig = children[entityName];
 		const { type } = entityConfig;
 
-		typeProcessors[type]({
+		return typeProcessors[type]({
 			...context,
 			data: {
 				entityData,
