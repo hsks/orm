@@ -5,13 +5,14 @@ const processChildren = (context) => {
 	const { data: { entityConfig: { children }}} = context;
 	const { data: { entityData }} = context;
 
-	asyncMap(children, (childConfig, name) => {
+	return asyncMap(children, (childConfig, name) => {
 		const { type } = childConfig;
 
 		// eslint-disable-next-line no-use-before-define
-		typeProcessors[type]({
+		return typeProcessors[type]({
 			...context,
 			data: {
+				entityName: name,
 				entityData: entityData[name],
 				entityConfig: childConfig,
 			},
