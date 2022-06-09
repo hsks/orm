@@ -4,7 +4,7 @@ const config = {
 		customer: {
 			path: '/',
 			type: 'entity',
-			maping: {
+			mapping: {
 				name: 'fullName',
 				mobileNumber: 'mobileNumber',
 				age: 'age',
@@ -14,7 +14,7 @@ const config = {
 				orders: {
 					path: './orders',
 					type: 'collection',
-					maping: {
+					mapping: {
 						date: 'date',
 						invoiceNumber: 'invoiceNumber',
 						deliveryDate: 'dateOfDelivery',
@@ -23,7 +23,7 @@ const config = {
 						deliveryAddress: {
 							type: 'entity',
 							path: './orders/deliveryAddress',
-							maping: {
+							mapping: {
 								city: 'city',
 								pincode: 'pincode',
 								street: 'Lane',
@@ -34,7 +34,7 @@ const config = {
 							type: 'collection',
 							children: {},
 							path: './orders/products',
-							maping: {
+							mapping: {
 								name: 'name',
 								quantity: 'quantity',
 								price: 'price',

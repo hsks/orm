@@ -24,19 +24,19 @@ const entity = (context) => {
 	const { data: { entityData, entityConfig }, cb } = context;
 	const { config: { statusKey }} = context;
 	const { [statusKey]: action } = entityData;
-	const { maping } = entityConfig;
+	const { mapping } = entityConfig;
 
 	const callBack = () => {
 		const data = cb({
 			...context,
 			data: {
 				action: action,
-				maping: translate(entityData, flip(maping)),
+				mapping: translate(entityData, flip(mapping)),
 			},
 		});
 
 		merge(
-			entityData, translate(data, maping), { [statusKey]: 'sync' }
+			entityData, translate(data, mapping), { [statusKey]: 'sync' }
 		);
 	};
 

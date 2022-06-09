@@ -34,14 +34,14 @@ describe('parser', () => {
 		const customerConfig = {
 			type: 'entity',
 			path: '/',
-			maping: {
+			mapping: {
 				name: 'name',
 			},
 			children: {
 				orders: {
 					type: 'collection',
 					path: './orders',
-					maping: {
+					mapping: {
 						childName: 'childName',
 					},
 					children: {},
@@ -64,7 +64,7 @@ describe('parser', () => {
 				...context,
 				data: {
 					action: 'delete',
-					maping: {
+					mapping: {
 						childName,
 					},
 				},
@@ -73,7 +73,7 @@ describe('parser', () => {
 				...context,
 				data: {
 					action: 'delete',
-					maping: {
+					mapping: {
 						name,
 					},
 				},
@@ -82,7 +82,7 @@ describe('parser', () => {
 				...context,
 				data: {
 					action: 'update',
-					maping: {
+					mapping: {
 						name,
 					},
 				},
@@ -91,7 +91,7 @@ describe('parser', () => {
 				...context,
 				data: {
 					action: 'update',
-					maping: {
+					mapping: {
 						childName,
 					},
 				},
