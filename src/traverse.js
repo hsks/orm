@@ -11,6 +11,7 @@ const traverse = (context) => {
 		return typeProcessors[type]({
 			...context,
 			data: {
+				entityName,
 				entityData,
 				entityConfig,
 			},

@@ -22,7 +22,7 @@ const processChildren = (context) => {
 
 // eslint-disable-next-line max-lines-per-function
 const entity = (context) => {
-	const { data: { entityData, entityConfig }, cb } = context;
+	const { data: { entityData, entityConfig, entityName }, cb } = context;
 	const { config: { statusKey }} = context;
 	const { [statusKey]: action } = entityData;
 	const { mapping } = entityConfig;
@@ -32,6 +32,7 @@ const entity = (context) => {
 			...context,
 			action: action,
 			data: translate(entityData, flip(mapping)),
+			entityName: entityName,
 		});
 
 		merge(
@@ -47,17 +48,16 @@ const entity = (context) => {
 };
 
 const collection = (context) => {
-	const { data: { entityData, entityConfig }} = context;
+	const { data: { entityData, entityConfig, entityName }} = context;
 
-	asyncMap(entityData, (item) => {
-		entity({
-			...context,
-			data: {
-				entityData: item,
-				entityConfig: entityConfig,
-			},
-		});
-	});
+	asyncMap(entityData, (item) => entity({
+		...context,
+		data: {
+			entityName: entityName,
+			entityData: item,
+			entityConfig: entityConfig,
+		},
+	}));
 };
 
 const typeProcessors = {
