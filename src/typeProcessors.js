@@ -36,7 +36,7 @@ const entity = (context) => {
 		});
 
 		merge(
-			entityData, translate(data, maping), { _status: 'sync' }
+			entityData, translate(data, maping), { [statusKey]: 'sync' }
 		);
 	};
 
