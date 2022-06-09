@@ -1,4 +1,4 @@
-const {	translate, flip, merge } = require('@laufire/utils/collection');
+const { translate, flip, merge } = require('@laufire/utils/collection');
 const { asyncMap } = require('./helpers');
 
 const processChildren = (context) => {
@@ -29,10 +29,8 @@ const entity = (context) => {
 	const callBack = () => {
 		const data = cb({
 			...context,
-			data: {
-				action: action,
-				mapping: translate(entityData, flip(mapping)),
-			},
+			action: action,
+			data: translate(entityData, flip(mapping)),
 		});
 
 		merge(

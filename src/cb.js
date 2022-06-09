@@ -1,3 +1,3 @@
-const cb = ({ data: { mapping }}) => mapping;
+const cb = ({ data }) => data;
 
 module.exports = cb;

@@ -59,48 +59,38 @@ describe('parser', () => {
 		const context = { source, config, cb };
 
 		await parser(context);
-		const expections = [
+
+		const expectations = [
 			{
 				...context,
+				action: 'delete',
 				data: {
-					action: 'delete',
-					mapping: {
-						childName,
-					},
+					childName,
 				},
 			},
 			{
 				...context,
+				action: 'delete',
 				data: {
-					action: 'delete',
-					mapping: {
-						name,
-					},
+					name,
 				},
 			},
 			{
 				...context,
+				action: 'update',
 				data: {
-					action: 'update',
-					mapping: {
-						name,
-					},
+					name,
 				},
 			},
 			{
 				...context,
+				action: 'update',
 				data: {
-					action: 'update',
-					mapping: {
-						childName,
-					},
+					childName,
 				},
 			},
 		];
 
-		// Map(expections, (expected) =>
-		// 	Expect(cb).toHaveBeenCalledWith(expected));
-
-		expect(cb.mock.calls.map(([value]) => value)).toEqual(expections);
+		expect(cb.mock.calls.map(([value]) => value)).toEqual(expectations);
 	});
 });
