@@ -1,10 +1,11 @@
 const parser = require('./parser');
 
 describe('parser', () => {
-	test('parses the data and make necessery actions.', async () => {
+	test('parses the data and make necessary actions.', async () => {
 		const name = Symbol('name');
 		const childName = Symbol('childName');
 		const id = Symbol('id');
+		const statusKey = '_status';
 
 		const generateSkeleton = ({ parentStatus, childStatus }) => ({
 			id: id,
@@ -13,10 +14,10 @@ describe('parser', () => {
 				{
 					id: id,
 					childName: childName,
-					_status: childStatus,
+					[statusKey]: childStatus,
 				},
 			],
-			_status: parentStatus,
+			[statusKey]: parentStatus,
 		});
 		const customer = generateSkeleton({
 			parentStatus: 'delete',

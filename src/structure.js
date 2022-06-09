@@ -1,3 +1,5 @@
+const statusKey = '_status';
+
 const customer = {
 	name: '',
 	mobileNumber: '',
@@ -18,7 +20,7 @@ const customer = {
 				city: '',
 				pincode: '',
 				street: '',
-				_status: 'create',
+				[statusKey]: 'create',
 			},
 			products: [
 				{
@@ -26,15 +28,15 @@ const customer = {
 					name: '',
 					quantity: '',
 					price: 1,
-					_status: 'create',
+					[statusKey]: 'create',
 				},
 			],
-			_status: 'delete',
+			[statusKey]: 'delete',
 		},
 	],
 
 	// CRUD actions
-	_status: 'create',
+	[statusKey]: 'create',
 };
 
 module.exports = { customer };
