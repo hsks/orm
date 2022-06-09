@@ -15,8 +15,8 @@ const entity = (context) => {
 			parentStatus = 'sync',
 		},
 	} = context;
-	const { statusKey } = config;
-	const { [statusKey]: currentStatus, id } = entityData;
+	const { statusKey, id } = config;
+	const { [statusKey]: currentStatus } = entityData;
 	const { children } = currentConfig;
 
 	entityData[statusKey] = getAction({
@@ -24,7 +24,7 @@ const entity = (context) => {
 		data: {
 			parentStatus: parentStatus,
 			currentStatus: currentStatus,
-			idExists: isDefined(id),
+			idExists: isDefined(entityData[id]),
 		},
 	});
 
@@ -42,20 +42,20 @@ const entity = (context) => {
 
 // eslint-disable-next-line max-lines-per-function
 const collection = (context) => {
-	const { config: { statusKey }} = context;
+	const { config: { statusKey, id }} = context;
 	const { data: { parentStatus, entityData, config }} = context;
 	const { children } = config;
 
 	// eslint-disable-next-line max-lines-per-function
 	map(entityData, (item) => {
-		const { [statusKey]: currentStatus, id } = item;
+		const { [statusKey]: currentStatus } = item;
 
 		item[statusKey] = getAction({
 			...context,
 			data: {
 				parentStatus: parentStatus,
 				currentStatus: currentStatus,
-				idExists: isDefined(id),
+				idExists: isDefined(item[id]),
 			},
 		});
 

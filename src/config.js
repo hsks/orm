@@ -1,5 +1,8 @@
+const { statusKey, id } = require('./constants');
+
 const config = {
-	statusKey: '_status',
+	statusKey: statusKey,
+	id: id,
 	children: {
 		customer: {
 			path: '/',
@@ -18,6 +21,7 @@ const config = {
 						date: 'date',
 						invoiceNumber: 'invoiceNumber',
 						deliveryDate: 'dateOfDelivery',
+						[id]: 'id',
 					},
 					children: {
 						deliveryAddress: {
@@ -27,6 +31,7 @@ const config = {
 								city: 'city',
 								pincode: 'pincode',
 								street: 'Lane',
+								[id]: 'id',
 							},
 							children: {},
 						},
@@ -38,6 +43,7 @@ const config = {
 								name: 'name',
 								quantity: 'quantity',
 								price: 'price',
+								[id]: 'id',
 							},
 						},
 					},
