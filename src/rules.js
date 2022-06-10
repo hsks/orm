@@ -42,6 +42,11 @@ const rules = [
 		action: 'read',
 	},
 	{
+		currentStatus: 'fetch',
+		idExists: true,
+		action: 'fetch',
+	},
+	{
 		idExists: true,
 		action: 'error',
 	},
