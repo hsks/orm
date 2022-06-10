@@ -1,7 +1,8 @@
-const cb = ({ entityName, id, action, data }) =>
+const cb = ({ entityName, action, data }) => {
 	// eslint-disable-next-line no-console
-	console.log(
-		entityName, id, action, data
-	);
+	console.log({ entityName, action, data });
+
+	return data;
+};
 
 module.exports = cb;
