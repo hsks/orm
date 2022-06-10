@@ -27,8 +27,8 @@ const entity = (context) => {
 	const { [statusKey]: action } = entityData;
 	const { mapping } = entityConfig;
 
-	const callBack = () => {
-		const data = cb({
+	const callBack = async () => {
+		const data = await cb({
 			...context,
 			action: action,
 			data: translate(entityData, flip(mapping)),
@@ -42,7 +42,7 @@ const entity = (context) => {
 
 	const process = () => processChildren(context);
 
-	asyncMap(action === 'delete'
+	return asyncMap(action === 'delete'
 		? [process, callBack]
 		: [callBack, process], (fn) => fn());
 };
