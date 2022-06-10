@@ -1,4 +1,4 @@
-const { statusKey, id } = require('./constants');
+const { statusKey, idKey } = require('./constants');
 
 const customer = {
 	name: '',
@@ -11,12 +11,12 @@ const customer = {
 	},
 	orders: [
 		{
-			[id]: '',
+			[idKey]: '',
 			date: '',
 			invoiceNumber: '',
 			deliveryDate: '',
 			deliveryAddress: {
-				[id]: '',
+				[idKey]: '',
 				city: '',
 				pincode: '',
 				street: '',
@@ -24,7 +24,7 @@ const customer = {
 			},
 			products: [
 				{
-					[id]: '',
+					[idKey]: '',
 					name: '',
 					quantity: '',
 					price: 1,

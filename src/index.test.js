@@ -1,5 +1,5 @@
 const parser = require('./parser');
-const { statusKey, id: idKey } = require('./constants');
+const { statusKey, idKey } = require('./constants');
 
 describe('parser', () => {
 	test('parses the data and make necessary actions.', async () => {

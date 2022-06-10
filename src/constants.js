@@ -1,6 +1,6 @@
 const constants = {
 	statusKey: '_status',
-	id: 'id',
+	idKey: 'id',
 };
 
 module.exports = constants;
