@@ -1,58 +1,72 @@
 const parser = require('./parser');
+const { statusKey, id: idKey } = require('./constants');
 
 describe('parser', () => {
 	test('parses the data and make necessary actions.', async () => {
-		const name = Symbol('name');
-		const childName = Symbol('childName');
+		const parentProp = Symbol('parentProp');
+		const childProp = Symbol('childProp');
 		const id = Symbol('id');
-		const statusKey = '_status';
 
-		const generateSkeleton = ({ parentStatus, childStatus }) => ({
-			id: id,
-			name: name,
-			orders: [
-				{
-					id: id,
-					childName: childName,
-					[statusKey]: childStatus,
+		const generateSkeleton = ({ parentStatus, childStatus, childName }) =>
+			({
+				config: {
+					type: 'entity',
+					path: '/',
+					mapping: {
+						id: [idKey],
+						parentProp: 'parentProp',
+					},
+					children: {
+						[childName]: {
+							type: 'collection',
+							path: childName,
+							mapping: {
+								id: [idKey],
+								childProp: 'childProp',
+							},
+							children: {},
+						},
+					},
 				},
-			],
-			[statusKey]: parentStatus,
-		});
-		const customer = generateSkeleton({
+				source: {
+					[idKey]: id,
+					parentProp: parentProp,
+					[childName]: [
+						{
+							[idKey]: id,
+							childProp: childProp,
+							[statusKey]: childStatus,
+						},
+					],
+					[statusKey]: parentStatus,
+				},
+			});
+		const {
+			config: customerConfig,
+			source: customerSource,
+		} = generateSkeleton({
 			parentStatus: 'delete',
 			childStatus: 'create',
+			childName: 'orders',
 		});
-		const student = generateSkeleton({
+		const {
+			config: studentConfig,
+			source: studentSource,
+		} = generateSkeleton({
 			parentStatus: 'update',
 			childStatus: 'update',
+			childName: 'marks',
 		});
 		const source = {
-			customer,
-			student,
-		};
-		const customerConfig = {
-			type: 'entity',
-			path: '/',
-			mapping: {
-				name: 'name',
-			},
-			children: {
-				orders: {
-					type: 'collection',
-					path: './orders',
-					mapping: {
-						childName: 'childName',
-					},
-					children: {},
-				},
-			},
+			customer: customerSource,
+			student: studentSource,
 		};
 		const config = {
-			statusKey: '_status',
+			statusKey: statusKey,
+			id: idKey,
 			children: {
 				customer: customerConfig,
-				student: customerConfig,
+				student: studentConfig,
 			},
 		};
 		const cb = jest.fn();
@@ -65,29 +79,37 @@ describe('parser', () => {
 				...context,
 				action: 'delete',
 				data: {
-					childName,
+					id,
+					childProp,
 				},
+				entityName: 'orders',
 			},
 			{
 				...context,
 				action: 'delete',
 				data: {
-					name,
+					id,
+					parentProp,
 				},
+				entityName: 'customer',
 			},
 			{
 				...context,
 				action: 'update',
 				data: {
-					name,
+					id,
+					parentProp,
 				},
+				entityName: 'student',
 			},
 			{
 				...context,
 				action: 'update',
 				data: {
-					childName,
+					id,
+					childProp,
 				},
+				entityName: 'marks',
 			},
 		];
 
