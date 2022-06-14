@@ -7,6 +7,7 @@ const traverse = (context) => {
 	return asyncMap(source, (entityData, entityName) => {
 		const entityConfig = children[entityName];
 		const { type } = entityConfig;
+		const parentStatus = 'sync';
 
 		return typeProcessors[type]({
 			...context,
@@ -14,6 +15,7 @@ const traverse = (context) => {
 				entityName,
 				entityData,
 				entityConfig,
+				parentStatus,
 			},
 		});
 	});
